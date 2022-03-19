@@ -1,0 +1,4 @@
+configuration:
+  verbose:
+    name: Verbose
+    description: TODO
