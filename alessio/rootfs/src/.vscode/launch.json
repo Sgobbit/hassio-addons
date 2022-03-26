@@ -9,7 +9,6 @@
       "type": "node",
       "request": "launch",
       "protocol": "inspector",
-      "cwd": "${workspaceFolder}/alessio/rootfs/src",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run-script",

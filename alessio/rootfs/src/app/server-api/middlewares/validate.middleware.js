@@ -1,18 +1,20 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                                                 *
  *    hassio-alessio                                                                               *
+ *    Copyright (c) 2022 Sgobbi Federico                                                           *
+ *    All rights reserved                                                                          *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// * * * * * * * * * * * * * Import externals
+// > > > > > > > > > > > > > > > > > > > > > > > Import externals
 const httpStatus = require('http-status');
 const Joi = require('joi');
 
-// * * * * * * * * * * * * * Import internals
+// > > > > > > > > > > > > > > > > > > > > > > > Import internals
 const ApiError = require('../utils/api-error.util');
 const pick = require('../utils/pick.util');
 
-// * * * * * * * * * * * * * The code
+// > > > > > > > > > > > > > > > > > > > > > > > The code
 const validate = (schema) => (req, res, next) => {
   const validSchema = pick(schema, ['params', 'query', 'body']);
   const object = pick(req, Object.keys(validSchema));
@@ -28,5 +30,5 @@ const validate = (schema) => (req, res, next) => {
   return next();
 };
 
-// * * * * * * * * * * * * * Module exports
+// > > > > > > > > > > > > > > > > > > > > > > > Module exports
 module.exports = validate;

@@ -13,6 +13,8 @@ homeassistant_api: true
 startup: before
 ports:
   80/tcp: 80
+  443/tcp: 443
+  1900/udp: 1900
 options:
   verbose: false
 schema:

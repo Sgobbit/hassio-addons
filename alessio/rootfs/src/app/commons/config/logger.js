@@ -1,15 +1,18 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                                                 *
  *    hassio-alessio                                                                               *
+ *    Copyright (c) 2022 Sgobbi Federico                                                           *
+ *    All rights reserved                                                                          *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// * * * * * * * * * * * * * Import externals
+// > > > > > > > > > > > > > > > > > > > > > > > Import externals
 const { createLogger, format, transports } = require('winston');
 
-// * * * * * * * * * * * * * Import internals
+// > > > > > > > > > > > > > > > > > > > > > > > Import internals
 const config = require('./config');
 
+// > > > > > > > > > > > > > > > > > > > > > > > The code
 const enumerateErrorFormat = format((info) => {
   if (info instanceof Error) {
     Object.assign(info, { message: info.stack });
@@ -35,5 +38,5 @@ const logger = createLogger({
   ],
 });
 
-// * * * * * * * * * * * * * Module exports
+// > > > > > > > > > > > > > > > > > > > > > > > Module exports
 module.exports = logger;

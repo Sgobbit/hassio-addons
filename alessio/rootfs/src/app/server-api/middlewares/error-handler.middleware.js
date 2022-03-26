@@ -1,31 +1,22 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                                                 *
  *    hassio-alessio                                                                               *
+ *    Copyright (c) 2022 Sgobbi Federico                                                           *
+ *    All rights reserved                                                                          *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// * * * * * * * * * * * * * Import externals
+// > > > > > > > > > > > > > > > > > > > > > > > Import externals
 const httpStatus = require('http-status');
 
-// * * * * * * * * * * * * * Import internals
-const config = require('../config/config');
-const logger = require('../config/logger');
-const ApiError = require('../utils/api-error.util');
+// > > > > > > > > > > > > > > > > > > > > > > > Import internals
+const config = require('../../commons/config/config');
+const logger = require('../../commons/config/logger');
 
-const errorConverter = (err, req, res, next) => {
-  let error = err;
-  if (!(error instanceof ApiError)) {
-    const statusCode =
-      error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
-    const message = error.message || httpStatus[statusCode];
-    error = new ApiError(statusCode, message, false, err.stack);
-  }
-  next(error);
-};
-
-// eslint-disable-next-line no-unused-vars
+// > > > > > > > > > > > > > > > > > > > > > > > The code
 const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
+
   if (config.env === 'production' && !err.isOperational) {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
@@ -39,15 +30,10 @@ const errorHandler = (err, req, res, next) => {
     ...(config.env === 'development' && { stack: err.stack }),
   };
 
-  if (config.env === 'development') {
-    logger.error(err);
-  }
+  logger.error(err);
 
   res.status(statusCode).send(response);
 };
 
-// * * * * * * * * * * * * * Module exports
-module.exports = {
-  errorConverter,
-  errorHandler
-};
+// > > > > > > > > > > > > > > > > > > > > > > > Module exports
+module.exports = errorHandler;

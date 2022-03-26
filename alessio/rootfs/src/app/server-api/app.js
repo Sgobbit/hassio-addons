@@ -1,24 +1,24 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                                                 *
  *    hassio-alessio                                                                               *
+ *    Copyright (c) 2022 Sgobbi Federico                                                           *
+ *    All rights reserved                                                                          *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// * * * * * * * * * * * * * Import externals
+// > > > > > > > > > > > > > > > > > > > > > > > Import externals
 const express = require('express');
 const helmet = require('helmet');
+const httpStatus = require('http-status');
 
-// * * * * * * * * * * * * * Import internals
-const morgan = require('./config/morgan');
-const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
+// > > > > > > > > > > > > > > > > > > > > > > > Import internals
 const routes = require('./routes');
+const errorConverter = require('./middlewares/error-converter.middleware');
+const errorHandler = require('./middlewares/error-handler.middleware');
 const ApiError = require('./utils/api-error.util');
 
-// * * * * * * * * * * * * * The code
+// > > > > > > > > > > > > > > > > > > > > > > > The code
 const app = express();
-
-app.use(morgan.successHandler);
-app.use(morgan.errorHandler);
 
 // set security HTTP headers
 app.use(helmet());
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/', routes);
 
-// send back a 404 error for any unknown api request
+// Send back a 404 error for any unknown api request
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
@@ -43,5 +43,5 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-// * * * * * * * * * * * * * Module exports
+// > > > > > > > > > > > > > > > > > > > > > > > Module exports
 module.exports = app;
